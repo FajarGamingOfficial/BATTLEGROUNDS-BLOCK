@@ -25,7 +25,6 @@ local function ShowNotif()
     local s = Instance.new("UIStroke", f)
     s.Color = Color3.fromRGB(80, 120, 255)
     s.Thickness = 1.5
-    
     local t1 = Instance.new("TextLabel", f)
     t1.Size = UDim2.new(1, 0, 0.6, 0)
     t1.Text = "VASTORA"
@@ -33,7 +32,6 @@ local function ShowNotif()
     t1.Font = Enum.Font.GothamBold
     t1.TextSize = 22
     t1.BackgroundTransparency = 1
-    
     local t2 = Instance.new("TextLabel", f)
     t2.Size = UDim2.new(1, 0, 0.4, 0)
     t2.Position = UDim2.new(0, 0, 0.5, 0)
@@ -42,7 +40,6 @@ local function ShowNotif()
     t2.Font = Enum.Font.GothamMedium
     t2.TextSize = 12
     t2.BackgroundTransparency = 1
-    
     f:TweenPosition(UDim2.new(0.5, -130, 0, 50), "Out", "Back", 0.6)
     task.wait(3)
     f:TweenPosition(UDim2.new(0.5, -130, 0, -100), "In", "Quad", 0.6)
@@ -64,7 +61,7 @@ S.Color = Color3.fromRGB(80, 120, 255)
 S.Thickness = 1.5
 
 local H = Instance.new("Frame", M)
-H.Size = UDim2.new(1, 0, 0, 35)
+H.Size = UDim2.new(1, 0, 0, 40)
 H.BackgroundTransparency = 1
 
 local L = Instance.new("TextLabel", H)
@@ -87,9 +84,16 @@ B.Font = Enum.Font.GothamBold
 B.TextSize = 16
 Instance.new("UICorner", B).CornerRadius = UDim.new(0, 5)
 
-local Btn = Instance.new("TextButton", M)
+local Container = Instance.new("Frame", M)
+Container.Name = "ContentContainer"
+Container.Size = UDim2.new(1, 0, 1, -40)
+Container.Position = UDim2.new(0, 0, 0, 40)
+Container.BackgroundTransparency = 1
+Container.ClipsDescendants = true
+
+local Btn = Instance.new("TextButton", Container)
 Btn.Size = UDim2.new(0.85, 0, 0, 38)
-Btn.Position = UDim2.new(0.075, 0, 0.35, 0)
+Btn.Position = UDim2.new(0.075, 0, 0.1, 0)
 Btn.Text = "INFINITY BLOCK"
 Btn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 Btn.TextColor3 = Color3.fromRGB(220, 220, 220)
@@ -100,21 +104,14 @@ local BtnStroke = Instance.new("UIStroke", Btn)
 BtnStroke.Color = Color3.fromRGB(45, 45, 60)
 BtnStroke.Thickness = 1
 
-local Cr = Instance.new("TextLabel", M)
+local Cr = Instance.new("TextLabel", Container)
 Cr.Size = UDim2.new(1, 0, 0, 20)
-Cr.Position = UDim2.new(0, 0, 0.82, 0)
+Cr.Position = UDim2.new(0, 0, 0.75, 0)
 Cr.Text = "by va!storaa"
 Cr.TextColor3 = Color3.fromRGB(80, 120, 255)
 Cr.Font = Enum.Font.GothamBold
 Cr.TextSize = 10
 Cr.BackgroundTransparency = 1
-
-Btn.MouseEnter:Connect(function()
-    TS:Create(BtnStroke, TweenInfo.new(0.3), {Color = Color3.fromRGB(80, 120, 255)}):Play()
-end)
-Btn.MouseLeave:Connect(function()
-    TS:Create(BtnStroke, TweenInfo.new(0.3), {Color = Color3.fromRGB(45, 45, 60)}):Play()
-end)
 
 M.Size = UDim2.new(0,0,0,0)
 TS:Create(M, TweenInfo.new(0.6, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 180, 0, 150)}):Play()
@@ -123,10 +120,12 @@ task.spawn(ShowNotif)
 local min = false
 B.MouseButton1Click:Connect(function()
     min = not min
-    local target = min and UDim2.new(0, 180, 0, 35) or UDim2.new(0, 180, 0, 150)
+    local targetSize = min and UDim2.new(0, 180, 0, 40) or UDim2.new(0, 180, 0, 150)
     B.Text = min and "+" or "-"
     B.BackgroundColor3 = min and Color3.fromRGB(60, 255, 100) or Color3.fromRGB(255, 65, 65)
-    TS:Create(M, TweenInfo.new(0.4, Enum.EasingStyle.Quart), {Size = target}):Play()
+    
+    TS:Create(M, TweenInfo.new(0.4, Enum.EasingStyle.Quart), {Size = targetSize}):Play()
+    Container.Visible = not min
 end)
 
 local act = false
